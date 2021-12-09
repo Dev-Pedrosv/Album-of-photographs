@@ -1,4 +1,4 @@
-# CONFIRA A APLICAÇÃO <a target="_blank" href="https://album-of-photographs.netlify.app/">AQUI</a>
+# CONFIRA A APLICAÇÃO <a href="https://album-of-photographs.netlify.app/">AQUI</a>
 
 # Getting Started with Create React App
 
