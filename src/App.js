@@ -8,14 +8,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Loading from './components/Loading';
+import { createClient } from 'pexels'
 
 function App() {
 
   const [photo, setPhoto] = useState([])
   const [numberPage, setNumberPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
-
-
+  const client = createClient('563492ad6f917000010000013068d0fa01184006954882ffc4273f17')
   const nextPage = () => {
     setNumberPage(numberPage + 1)
     setIsLoading(true)
@@ -39,17 +39,18 @@ function App() {
     }
   }
 
+
   useEffect(() => {
 
     async function fetchPhotos() {
-      await axios.get(`https://api.pexels.com/v1/curated?page=${numberPage}&per_page=10`)
-        .then((response) => {
-
-          setPhoto(response.data.photos)
-          setIsLoading(false)
-        })
+      client.photos.curated({ page: numberPage, per_page: 10 }).then(photos => {
+        setPhoto(photos.photos)
+        setIsLoading(false)
+      })
     }
+
     fetchPhotos()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numberPage])
 
 
@@ -77,7 +78,7 @@ function App() {
             </>
           ) : (
             <>
-              {photo.map((image) => (
+                {photo && photo.map((image) => (
                 <C.List key={image.id}>
                   <C.Image src={image.src.medium} />
                   <C.Info target="_blank" href={image.photographer_url}>{image.photographer}</C.Info>
